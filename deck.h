@@ -12,6 +12,7 @@
  */
 struct deck {
   struct card list[52];
+  int top_card;
 };
 
 /* 

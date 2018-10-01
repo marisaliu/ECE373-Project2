@@ -11,7 +11,7 @@
  *  Each player can have at most 7 "books" before winning 
  */
 struct player {
-  struct hand card_list;
+  struct hand* card_list;
   char book[7];
   size_t hand_size;
 };
