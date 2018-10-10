@@ -62,6 +62,7 @@ int deal_player_cards(struct player* target) {
 	 newHand = currentHand;
 	 }
   }
+  return 0;
 }
 
 struct card* next_card() {
