@@ -8,7 +8,7 @@
 struct card
 {
   char suit;
-  char rank[2];
+  char rank;
 };
 
 /*
