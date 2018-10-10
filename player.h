@@ -143,7 +143,19 @@ char computer_play(struct player* target);
  *   returns: return a valid selected rank
  */
 char user_play(struct player* target);
+/*
+ * Function: display_hand
+ * ----------------------
+ * Print out contents of target's hand
+ */
+void display_hand(struct player* target);
 
+/*
+ * Function: display_book
+ * ----------------------
+ * Print out target's books
+ */
+void display_book(struct player* target, int id);
 #endif
 
 

@@ -64,4 +64,5 @@ struct card* next_card( );
  */
 size_t deck_size( );
 
+struct hand* initHand();
 #endif

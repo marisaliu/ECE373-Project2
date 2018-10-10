@@ -4,11 +4,25 @@
 
 int main(int args, char* argv[]) 
 {
+int play = 1; //1 true, 0 false
+int turn = 1; //1 true, 0 false
+struct deck Deck;
+struct player player, comp;
+char inputRank;
+while(play==1){
 //Start game
 //Shuffle
+  Deck.shuffle();
 //Deal cards
-
+  Deck.deal_player_cards(&player);
+  Deck.deal_player_cards(&comp);
 //Player 1 starts
+  while(turn==1){
+    player.display_hand(&player);
+    player.display_book(&player,1);
+    comp.display_book(&comp,2);
+    inputRank = player.user_play(&player);
+  }
 //Display player 1's hand
 //Display player 1's book
 //Display player 2's book
@@ -28,5 +42,5 @@ int main(int args, char* argv[])
 
 //at end output winner and scores(num of books)
 //ask if want to play again, if yes, start loop again, if no, exit
-  fprintf(stdout, "Put your code here.");
+}
 }
