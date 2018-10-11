@@ -64,5 +64,9 @@ struct card* next_card( );
  */
 size_t deck_size( );
 
+/*
+ * Function: initHand
+ * Return a pointer to a newly initialized hand.
+ */
 struct hand* initHand();
 #endif
