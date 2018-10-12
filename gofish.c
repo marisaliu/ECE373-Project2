@@ -1,6 +1,5 @@
 #include <stdio.h>
-#include <deck.h>
-#include <player.h>
+#include "deck.h"
 //
 int main(int args, char* argv[]) 
 {
