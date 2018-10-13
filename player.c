@@ -76,6 +76,7 @@ char check_add_book(struct player* target, char search_rank)
       else{ target->card_list = iterator->next;}
       free(iterator);
     }
+    target->book[strlen(target->book)] = search_rank;
     return search_rank;
   }
   return 0; //no book was found 
@@ -167,7 +168,7 @@ char computer_play(struct player* target)
   srand(time(0));
   while(temp != NULL)       //Loops through the linked list and adds the rank to a char array
   {
-    stringRank[count] = temp->top.rank;
+    stringRank[count++] = temp->top.rank;
     temp = temp->next;
   }
   //Picks a random index to access in the char array and returns that char
@@ -219,4 +220,17 @@ void display_hand(struct player* target){
 void display_book(struct player* target, int id){
   printf("\nPlayer %d's Book - ", id);
   printf("%s", target->book);
+}
+
+///////////////////////////////////////
+void print_book_match(char inputRank, struct hand* targetHand, int id){
+  struct hand* temp = targetHand;
+  printf("\n  - Player %d has", id);
+  while(temp != NULL){
+    if(temp->top.rank == inputRank){
+      printf(" %c%c", temp->top.rank, temp->top.suit);
+    }
+    temp = temp->next;
+  }
+  printf("\n  - Player %d books %c", id, inputRank);
 }
