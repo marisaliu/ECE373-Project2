@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include "deck.h"
-#include "user.h"
+#include "player.h"
 #include <ctype.h>
 //
 int main(int args, char* argv[]) 
@@ -16,12 +16,22 @@ int main(int args, char* argv[])
   int win = 0;  //1 true, 0 false
   int playAgain = 0;
   struct card* nextCard;
+  user.book[7] = '\0'; 
+  computer.book[7] = '\0';
+  
+  shuffle(); 
+  deal_player_cards(&user);
+  display_hand(&user);
+  deal_player_cards(&computer);
+  display_hand(&computer);
+}
+
 //  struct deck Deck;
 //  struct user player, computer;
-  while(play==1){                              //start game
+/*  while(play==1){                              //start game
     shuffle();                                  //shuffle cards
-    deal_user_cards(&player);                //deal cards
-    deal_user_cards(&computer);
+    deal_player_cards(&user);                //deal cards
+    deal_player_cards(&computer);
     while(win == 0){
       //Player 1 starts
       while((turn==1) && (win == 0)){
@@ -113,4 +123,4 @@ int main(int args, char* argv[])
   }//at end output winner and scores(num of books)
 }//ask if  want to play again, if yes, start loop again, if no, exit
   
-
+*/

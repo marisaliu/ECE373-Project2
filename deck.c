@@ -31,17 +31,15 @@ struct hand* initHand() {
 }
 
 int deal_player_cards(struct player* target) {
-  struct hand *currentHand, *newHand;
-  int i;
-  currentHand = initHand();
-  for(i=0; i<7; i++) {
-	 newHand = initHand();
-	 if(newHand == NULL) {return -1;}
-	 else{
-	 currentHand->top = deck_instance.list[deck_instance.top_card++];
-	 currentHand->next = newHand;
-	 newHand = currentHand;
-	 }
+  struct hand *temp;
+  for(int i=0; i<7; i++) {
+    temp = initHand();
+    if(temp == NULL) {return -1;}
+    else{ 
+      temp->top = deck_instance.list[deck_instance.top_card++];
+      temp->next = target->card_list;
+      target->card_list = temp;
+       }
   }
   return 0;
 }

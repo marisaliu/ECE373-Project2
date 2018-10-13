@@ -222,7 +222,8 @@ void display_hand(struct player* target){
   struct hand* temp = target->card_list;
   while(temp != NULL){
     printf(" %c%c", temp->top.rank, temp->top.suit);
-  }
+    temp = temp->next; 
+ }
 }
 
 void display_book(struct player* target, int id){
