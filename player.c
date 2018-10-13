@@ -1,3 +1,4 @@
+
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -16,6 +17,7 @@ int add_card(struct player* target, struct card* new_card)
   temp->top = *new_card;
   temp->next = target->card_list;
   target->card_list = temp;
+  target->hand_size++;
   return 0; //if no error return non-zero otherwise
 }
 
@@ -42,6 +44,7 @@ int remove_card(struct player* target, struct card* old_card)
     target->card_list = iterator->next;
   }
   free(iterator);
+  target->hand_size--;
   return 0;     //returns 0 because we found and removed the card from the hand
 }
 
@@ -75,6 +78,7 @@ char check_add_book(struct player* target, char search_rank)
       if(previous != NULL) previous->next = iterator->next;
       else{ target->card_list = iterator->next;}
       free(iterator);
+      target->hand_size--;
     }
     target->book[strlen(target->book)] = search_rank;
     return search_rank;
@@ -144,7 +148,7 @@ int game_over(struct player* target)
 /////////////////////////////////////////////////////////////////////////////
 int reset_player(struct player* target)
 {
-  target->book[0] = '\0';
+  target->book[7] = '\0';
   struct hand* temp = NULL;
   while(target->card_list != NULL)
   {
@@ -170,7 +174,6 @@ char computer_play(struct player* target)
   {
     stringRank[count++] = temp->top.rank;
     temp = temp->next;
-    count++;
   }
   //Picks a random index to access in the char array and returns that char
   int max = strlen(stringRank);
@@ -228,12 +231,30 @@ void print_book_match(char inputRank, struct hand* targetHand, int id){
   struct hand* temp = targetHand;
   printf("\n  - Player %d has", id);
   while(temp != NULL){
-    printf("\n %c",temp->top.rank);
     if(temp->top.rank == inputRank){
-      printf("\nTEST");
       printf(" %c%c", temp->top.rank, temp->top.suit);
     }
     temp = temp->next;
   }
   printf("\n  - Player %d books %c", id, inputRank);
 }
+
+///////////////////////////////////////
+struct hand* copy_hand_list(struct player* target){
+  struct hand *start, *prev;
+  while(target->card_list != NULL){
+    struct hand* temp = (struct hand*)malloc(sizeof(struct hand));
+    temp->top = target->card_list->top;
+    if(start == NULL){
+      start = temp;
+      prev = temp;
+    }
+    else{
+    prev->next = temp;
+    prev = temp; 
+    }
+   target->card_list = target->card_list->next;
+  }
+  return start; 
+}
+
