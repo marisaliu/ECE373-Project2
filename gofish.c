@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "deck.h"
 #include "player.h"
+#include <ctype.h>
 //
 int main(int args, char* argv[]) 
 {
@@ -14,7 +15,7 @@ int main(int args, char* argv[])
   int win = 0;  //1 true, 0 false
   int playAgain = 0;
   struct card* nextCard;
-  struct deck Deck;
+//  struct deck Deck;
   struct player player, comp;
   while(play==1){                              //start game
     shuffle();                                  //shuffle cards
@@ -96,10 +97,10 @@ int main(int args, char* argv[])
       printf("\nDo you want to play again?");
       while(playAgain == 0){
         char input = getchar();
-        if(tolower(input) == "y"){
+        if(tolower(input) == 'y'){
           break;
         }
-        else if(input == "n"){
+        else if(input == 'n'){
           play = 0;
           exit(0);
         }
