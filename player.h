@@ -156,6 +156,13 @@ void display_hand(struct player* target);
  * Print out target's books
  */
 void display_book(struct player* target, int id);
+
+/*
+ * Function: print_book_match
+ * --------------------------
+ * Print out the target hand's matches with the input rank
+ */
+void print_book_match(char inputRank, struct hand* targetHand, int id)
 #endif
 
 
