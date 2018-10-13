@@ -147,7 +147,7 @@ int game_over(struct player* target)
 /////////////////////////////////////////////////////////////////////////////
 int reset_player(struct player* target)
 {
-  target->book[7] = '\0';
+  target->book[0] = '\0';
   struct hand* temp = NULL;
   while(target->card_list != NULL)
   {
@@ -240,6 +240,7 @@ void print_book_match(char inputRank, struct hand* targetHand, int id){
 
 ///////////////////////////////////////
 struct hand* copy_hand_list(struct player* target){
+<<<<<<< HEAD
 if(target->card_list == NULL) return NULL;
 struct hand* new = malloc(sizeof(struct hand));
 
@@ -248,21 +249,4 @@ target->card_list = target->card_list->next;
 while(target->card_list != NULL){
 
 }
-/*
-  struct hand *start, *prev;
-  while(target->card_list != NULL){
-    struct hand* temp = (struct hand*)malloc(sizeof(struct hand));
-    temp->top = target->card_list->top;
-    if(start == NULL){
-      start = temp;
-      prev = temp;
-    }
-    else{
-    prev->next = temp;
-    prev = temp; 
-    }
-   target->card_list = target->card_list->next;
-  }
-  return start; 
-}
-*/
+

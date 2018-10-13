@@ -33,9 +33,6 @@ int main(void){
 /////////////////////Player 1's Turn///////////////////////////////////
       while((turn==1) && (win == 0)){
         display_hand(&user);                          //Display player 1's hand
-      
-         display_hand(&computer);
-
         display_book(&user,1);                        //Display player 1's book 
         display_book(&computer,2);                    //Display user 1's book
         if(user.hand_size == 0){                      //If player's hand is empty, player will draw a card and end their turn
@@ -86,7 +83,6 @@ int main(void){
 ////////////////////Player 2's turn/////////////////////////////////////////////
         while((turn == 0) && (win == 0)){
         display_hand(&user);                               //Display player 1's hand
-        display_hand(&computer);
         display_book(&user,1);                         //Display user 1's book
         display_book(&computer,2);                         //Display user 2's book
         if(computer.hand_size == 0){
@@ -97,7 +93,7 @@ int main(void){
 	}
 	else{
 	  inputRank =  computer_play(&computer);             //Prompt player 1 to enter a rank
-       	  temp = computer.card_list;
+       	  temp = copy_hand_list(&computer);
           transferCards = search(&user, inputRank);          //Check player 2's hand to see if they have that rank
     ///////////////////////If they have the card - transfer cards//////////////
           if(transferCards == 1){                       
@@ -119,6 +115,7 @@ int main(void){
             printf("\n  - Go Fish, Player 2 draws a card");
             bookAdded = check_add_book(&computer, nextCard->rank);
             if(bookAdded != 0){
+	      printf("/n  - Player 2 drew %c%c", nextCard->rank, nextCard->suit);
 	      print_book_match(bookAdded,temp,2);
               win = game_over(&computer);
               if(win == 1) break;
