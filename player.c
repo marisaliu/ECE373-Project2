@@ -161,7 +161,7 @@ int reset_player(struct player* target)
 ////////////////////////////////////////////////////////////////////////////
 char computer_play(struct player* target)
 {
-  char *stringRank = "";
+  char stringRank[50] = "";
   struct hand* temp = target->card_list;
   int count = 0;
   srand(time(0));
@@ -202,7 +202,7 @@ char input;
       }
       temp = temp->next;
     }
-    printf("\nError = must have at least one card from rank to play");
+    printf("Error = must have at least one card from rank to play");
   }
 }
 
