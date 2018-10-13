@@ -16,6 +16,7 @@ int add_card(struct player* target, struct card* new_card)
   temp->top = *new_card;
   temp->next = target->card_list;
   target->card_list = temp;
+  target->hand_size++;
   return 0; //if no error return non-zero otherwise
 }
 
@@ -42,6 +43,7 @@ int remove_card(struct player* target, struct card* old_card)
     target->card_list = iterator->next;
   }
   free(iterator);
+  target->hand_size--;
   return 0;     //returns 0 because we found and removed the card from the hand
 }
 
@@ -75,6 +77,7 @@ char check_add_book(struct player* target, char search_rank)
       if(previous != NULL) previous->next = iterator->next;
       else{ target->card_list = iterator->next;}
       free(iterator);
+      target->hand_size--;
     }
     target->book[strlen(target->book)] = search_rank;
     return search_rank;
@@ -233,4 +236,23 @@ void print_book_match(char inputRank, struct hand* targetHand, int id){
     temp = temp->next;
   }
   printf("\n  - Player %d books %c", id, inputRank);
+}
+
+///////////////////////////////////////
+struct hand* copy_hand_list(struct player* target){
+  struct hand *start, *prev;
+  while(target->card_list != NULL){
+    struct hand* temp = (struct hand*)malloc(sizeof(struct hand));
+    temp->top = target->card_list->top;
+    if(start == NULL){
+      start = temp;
+      prev = temp;
+    }
+    else{
+    prev->next = temp;
+    prev = temp; 
+    }
+   target->card_list = target->card_list->next;
+  }
+  return start; 
 }
