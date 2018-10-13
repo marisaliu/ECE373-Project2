@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <ctype.h>
 #include "player.h"
 
 ////////////////////////////////////////////////////////////////
@@ -111,9 +112,10 @@ int transfer_cards(struct player* src, struct player* dest, char rank)
   while(temp!=NULL)
   {
     if(temp->top.rank == rank){
-      error = remove_card(src, &(temp->top));
+      printf(" %c%c", temp->top.rank, temp->top.suit);
+      error = add_card(dest,&(temp->top));
       if(error == -1) return -1;
-      error = add_card(dest, &(temp->top));
+      error = remove_card(src, &(temp->top));
       if(error == -1) return -1;
       temp = src->card_list;
     }
@@ -206,7 +208,7 @@ char input;
 
 /////////////////////////////////////////
 void display_hand(struct player* target){
-  printf("\nPlayer 1's Hand -");
+  printf("\n\nPlayer 1's Hand -");
   struct hand* temp = target->card_list;
   while(temp != NULL){
     printf(" %c%c", temp->top.rank, temp->top.suit);

@@ -52,44 +52,45 @@ int main(int args, char* argv[])
         inputRank = user_play(&user); //Prompt player 1 to enter a rank
         transferCards = search(&computer, inputRank); //Check player 2's hand to see if they have that rank
         if(transferCards == 1){           //If they have the rank transfer the cards
-          transfer_cards(&computer, &user, inputRank);
+          printf("  - Player 2 has");
+  	  transfer_cards(&computer, &user, inputRank);
           bookAdded = check_add_book(&user, inputRank);
           if(bookAdded != 0){
             win = game_over(&user);
             if(win == 1) break;
 	  }
-	  printf("\nPlayer 1 gets another turn");
+	  printf("\n  - Player 1 gets another turn");
         }
         else{                            //If they dont have the card exit the loop and switch to user 2's turn
-          printf("Player 2 has no %c's", inputRank);
+          printf("  - Player 2 has no %c's", inputRank);
           struct card* nextCard = next_card();  //Draw a card from deck
           add_card(&user, nextCard);
-          printf("\nGo Fish, Player 1 draws %c%c", nextCard->rank, nextCard->suit);
+          printf("\n  - Go Fish, Player 1 draws %c%c", nextCard->rank, nextCard->suit);
           bookAdded = check_add_book(&user, inputRank);
           if(bookAdded != 0){
             win = game_over(&user);
             if(win == 1) break;
           }
  	  if(nextCard->rank != inputRank){
-            printf("\nPlayer 2's turn");
+            printf("\n  - Player 2's turn");
             turn = 0;
           }
           else{
-            printf("\nPlayer 1 gets another turn");
+            printf("\n  - Player 1 gets another turn");
           }
         }
       } 
     //Player 2's turn
-      while((turn == 0) && (win == 0)){
+        while((turn == 0) && (win == 0)){
         display_hand(&user);      //Display player 1's hand
+        display_hand(&computer);
         display_book(&computer,1);    //Display user 1's book
         display_book(&computer,2);        //Display user 2's book
         inputRank =  computer_play(&computer); //Prompt player 1 to enter a rank
-       
-   printf(" Computer INput: %c", inputRank);
- transferCards = search(&user, inputRank); //Check player 2's hand to see if they have that rank
+        transferCards = search(&user, inputRank); //Check player 2's hand to see if they have that rank
         if(transferCards == 1){           //If they have the rank transfer the cards
-          transfer_cards(&user, &computer, inputRank);
+          printf("  - Player 1 has ");
+	  transfer_cards(&user, &computer, inputRank);
           bookAdded = check_add_book(&computer, inputRank);
           if(bookAdded != 0){
             win = game_over(&computer);
@@ -98,17 +99,18 @@ int main(int args, char* argv[])
 	    printf("\nPlayer 2 gets another turn");
         }
         else{                            //If they dont have the card exit the loop and switch to user 2's turn
-          printf("Player 1 has no %c's", inputRank);
+          printf("  - Player 1 has no %c's", inputRank);
           struct card* nextCard = next_card();  //Draw a card from deck
           add_card(&computer, nextCard);
-          printf("\nGo Fish, Player 2 draws %c%c", nextCard->rank, nextCard->suit);
+          printf("\n  - Go Fish, Player 2 draws a card");
           bookAdded = check_add_book(&user, inputRank);
           if(bookAdded != 0){
             win = game_over(&computer);
             if(win == 1) break;
           }
 	  if(nextCard->rank != inputRank){
-            turn = 0;
+            printf("\n  - Player 1's turn");
+	    turn = 0;
           }
           else{
            printf("\nPlayer 2 gets another turn");
