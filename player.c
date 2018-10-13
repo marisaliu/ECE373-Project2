@@ -106,38 +106,20 @@ int search(struct player* target, char rank)
  *///////////////////////////////////////////////////////////////////
 int transfer_cards(struct player* src, struct player* dest, char rank)
 {
-   
-  int count = 0; //number of cards to be transferred
-  struct hand* iterator = src->card_list;
-  struct hand* previous = iterator;
-  if(iterator == NULL) { return -1;} //error - source player's hand is empty
-  while(iterator != NULL)           //Continues until end of list
+  int error;
+  struct hand* temp = src->card_list;
+  while(temp!=NULL)
   {
-    printf("\nTest");
-    if(iterator->top.rank == rank)        //When it encounters a card with the right rank it will transfer the card
-    {
-    printf("\n TEST2");
-      if(previous != NULL) previous->next = iterator->next;   //removing card from src
-      else{ src->card_list = iterator->next;}
-      count++;
-      struct card transferCard;
-      transferCard.suit = iterator->top.suit;
-      transferCard.rank = rank;
-      struct hand* transfer = (struct hand*)malloc(sizeof(struct hand)); //allocate new memory for new card in dest hand
-      if(transfer == NULL){ return -1;}
-      struct hand*temp = dest->card_list;
-      temp->top = transferCard;
-      temp->next = dest->card_list;
-      dest->card_list = temp;
-      free(iterator);
-      iterator = previous->next;
+    if(temp->top.rank == rank){
+      error = remove_card(src, &(temp->top));
+      if(error == -1) return -1;
+      error = add_card(dest, &(temp->top));
+      if(error == -1) return -1;
+      temp = src->card_list;
     }
-    else{
-    previous = iterator;
-    iterator = iterator->next;
-   }  
-}
-  return count; 
+    else{ temp = temp->next;}
+  }
+  return 0;
 }
 
 
@@ -180,6 +162,7 @@ char computer_play(struct player* target)
   char *stringRank = "";
   struct hand* temp = target->card_list;
   int count = 0;
+  srand(time(0));
   while(temp != NULL)       //Loops through the linked list and adds the rank to a char array
   {
     stringRank[count] = temp->top.rank;
