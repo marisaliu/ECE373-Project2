@@ -144,7 +144,7 @@ int game_over(struct player* target)
 /////////////////////////////////////////////////////////////////////////////
 int reset_player(struct player* target)
 {
-  target->book[7] = '\0';
+  target->book[0] = '\0';
   struct hand* temp = NULL;
   while(target->card_list != NULL)
   {
@@ -228,7 +228,9 @@ void print_book_match(char inputRank, struct hand* targetHand, int id){
   struct hand* temp = targetHand;
   printf("\n  - Player %d has", id);
   while(temp != NULL){
+    printf("\n %c",temp->top.rank);
     if(temp->top.rank == inputRank){
+      printf("\nTEST");
       printf(" %c%c", temp->top.rank, temp->top.suit);
     }
     temp = temp->next;
