@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include "deck.h"
 #include "player.h"
 //
@@ -96,10 +97,10 @@ int main(int args, char* argv[])
       printf("\nDo you want to play again?");
       while(playAgain == 0){
         char input = getchar();
-        if(tolower(input) == "y"){
+        if(tolower(input) == 'y'){
           break;
         }
-        else if(input == "n"){
+        else if(input == 'n'){
           play = 0;
           exit(0);
         }

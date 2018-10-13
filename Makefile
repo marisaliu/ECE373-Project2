@@ -13,6 +13,7 @@ $(OBJECTS):%.o:%.c
 	@echo OBJ: the rulename is $@ and the first dependency is $<
 	gcc -c $<
 
+debug:CFLAGS += -g
 debug:$(OBJECTS)
 	gcc $(CFLAGS) -g -o $@ $(OBJECTS)
 
