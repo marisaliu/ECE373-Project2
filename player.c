@@ -76,6 +76,7 @@ char check_add_book(struct player* target, char search_rank)
       else{ target->card_list = iterator->next;}
       free(iterator);
     }
+    target->book[strlen(target->book)] = search_rank;
     return search_rank;
   }
   return 0; //no book was found 
@@ -169,6 +170,7 @@ char computer_play(struct player* target)
   {
     stringRank[count] = temp->top.rank;
     temp = temp->next;
+    count++;
   }
   //Picks a random index to access in the char array and returns that char
   int max = strlen(stringRank);
