@@ -109,14 +109,14 @@ int transfer_cards(struct player* src, struct player* dest, char rank)
    
   int count = 0; //number of cards to be transferred
   struct hand* iterator = src->card_list;
-  struct hand* previous = NULL;
+  struct hand* previous = iterator;
   if(iterator == NULL) { return -1;} //error - source player's hand is empty
   while(iterator != NULL)           //Continues until end of list
   {
-    previous = iterator;
-    iterator = iterator->next;
+    printf("\nTest");
     if(iterator->top.rank == rank)        //When it encounters a card with the right rank it will transfer the card
     {
+    printf("\n TEST2");
       if(previous != NULL) previous->next = iterator->next;   //removing card from src
       else{ src->card_list = iterator->next;}
       count++;
@@ -132,7 +132,11 @@ int transfer_cards(struct player* src, struct player* dest, char rank)
       free(iterator);
       iterator = previous->next;
     }
-  }
+    else{
+    previous = iterator;
+    iterator = iterator->next;
+   }  
+}
   return count; 
 }
 
@@ -196,16 +200,17 @@ char computer_play(struct player* target)
 //////////////////////////////////////////////////////////////////////////
 char user_play(struct player* target)
 {
-  char input;
+ ;  
+char input;
   int boolInHand = 0;
   while(boolInHand == 0)
   {
     printf("\nPlayer 1's turn, enter a Rank: ");
-    input = getchar();
+    scanf(" %c",&input);   
     struct hand* temp = target->card_list;
     while(temp != NULL)
     {
-      if(temp->top.rank== input)
+      if(temp->top.rank== toupper(input))
       { 
         boolInHand = 1;
         return input;

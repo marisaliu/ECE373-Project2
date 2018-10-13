@@ -9,6 +9,7 @@ int shuffle() {
   char rank[] = {'2', '3', '4', '5', '6', '7', '8', '9', '0', 'J', 'Q', 'K', 'A'};
   struct card newCard;
   int i, random;
+  srand(time(0));
   for(i=0; i<TOTALDECK; i++) {
  	newCard.suit = suit[i%4];
 	newCard.rank = rank[i%13];

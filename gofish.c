@@ -18,12 +18,17 @@ int main(int args, char* argv[])
   struct card* nextCard;
   user.book[7] = '\0'; 
   computer.book[7] = '\0';
-  
+ 
   shuffle(); 
   deal_player_cards(&user);
   display_hand(&user);
   deal_player_cards(&computer);
   display_hand(&computer);
+  inputRank = user_play(&user);
+  transferCards = search(&user, inputRank);
+  if(transferCards == 1){
+    transfer_cards(&user, &computer, inputRank);
+  }
 }
 
 //  struct deck Deck;
@@ -122,5 +127,5 @@ int main(int args, char* argv[])
     }
   }//at end output winner and scores(num of books)
 }//ask if  want to play again, if yes, start loop again, if no, exit
-  
-*/
+*/  
+
