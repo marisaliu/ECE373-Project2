@@ -198,7 +198,7 @@ char input;
       if(temp->top.rank== toupper(input))
       { 
         boolInHand = 1;
-        return input;
+        return toupper(input);
       }
       temp = temp->next;
     }

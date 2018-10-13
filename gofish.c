@@ -36,14 +36,17 @@ int main(int args, char* argv[])
 
 }
 */
-//  struct deck Deck;
-//  struct user player, computer;
-    while(play==1){                              //start game
+
+//////////////////////Starts the game/////////////////////////
+  while(play==1){                              //start game
     shuffle();                                  //shuffle cards
     deal_player_cards(&user);                //deal cards
     deal_player_cards(&computer);
+
+///////////////////////Loops Through Players////////////////////////////////   
     while(win == 0){
-      //Player 1 starts
+
+/////////////////////Player 1's Turn///////////////////////////////////
       while((turn==1) && (win == 0)){
         display_hand(&user);       //Display player 1's hand
       
@@ -82,7 +85,8 @@ int main(int args, char* argv[])
           }
         }
       } 
-    //Player 2's turn
+
+////////////////////Player 2's turn/////////////////////////////////////////////
         while((turn == 0) && (win == 0)){
         display_hand(&user);      //Display player 1's hand
         display_hand(&computer);
@@ -91,8 +95,8 @@ int main(int args, char* argv[])
         inputRank =  computer_play(&computer); //Prompt player 1 to enter a rank
         transferCards = search(&user, inputRank); //Check player 2's hand to see if they have that rank
         if(transferCards == 1){           //If they have the rank transfer the cards
-          printf("  - Player 1 has ");
-	  transfer_cards(&user, &computer, inputRank);
+          printf("\n  - Player 1 has");
+	  transfer_cards(&user, &computer, inputRank));
           bookAdded = check_add_book(&computer, inputRank);
           if(bookAdded != 0){
             win = game_over(&computer);
@@ -107,37 +111,45 @@ int main(int args, char* argv[])
           printf("\n  - Go Fish, Player 2 draws a card");
           bookAdded = check_add_book(&user, inputRank);
           if(bookAdded != 0){
+printf("Bookadded");
             win = game_over(&computer);
             if(win == 1) break;
           }
 	  if(nextCard->rank != inputRank){
             printf("\n  - Player 1's turn");
-	    turn = 0;
+	    turn = 1; 
           }
           else{
            printf("\nPlayer 2 gets another turn");
           }
         }
       }
-      if(game_over(&user) == 1){
-        printf("\nPlayer 1 Wins! %d-%d", strlen(user.book), strlen(computer.book));
+    }
+
+
+////////////////////////End of Game!/////////////////////////////////////////////
+    if(game_over(&user) == 1){
+      printf("\nPlayer 1 Wins! %d-%d", strlen(user.book), strlen(computer.book));
+    }
+    else if(game_over(&computer) == 1){
+      printf("\nPlayer 2 Wins! %d-%d", strlen(computer.book), strlen(user.book));
+    }
+    else{printf("\nERROR! - No one won!");}
+    printf("\nDo you want to play again?");
+
+/////////////////////Play Again//////////////////////////////////////////////////
+    char input;
+    while(playAgain == 0){
+      scanf(" %c", &input);
+      if(tolower(input) == 'y'){
+        break;
       }
-      else{
-        printf("\nPlayer 2 Wins! %d-%d", strlen(computer.book), strlen(user.book));
+      else if(tolower(input) == 'n'){
+        play = 0;
+        exit(0);
       }
-      printf("\nDo you want to play again?");
-      while(playAgain == 0){
-        char input = getchar();
-        if(tolower(input) == 'y'){
-          break;
-        }
-        else if(input == 'n'){
-          play = 0;
-          exit(0);
-        }
-        else {
-          printf("\nError! Please enter Y or N");
-        }
+      else {
+        printf("\nError! Please enter Y or N");
       }
     }
   }//at end output winner and scores(num of books)
