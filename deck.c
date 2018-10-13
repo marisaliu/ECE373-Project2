@@ -13,7 +13,8 @@ int shuffle() {
   for(i=0; i<TOTALDECK; i++) {
  	newCard.suit = suit[i%4];
 	newCard.rank = rank[i%13];
-	deck_instance.list[i] = newCard;
+    if(newCard.suit == NULL && newCard.rank == NULL) return -1;	
+    deck_instance.list[i] = newCard;
   }
   for(i=TOTALDECK-1; i>=0; i--) {
 	 random = (rand() % (i+1));
@@ -22,7 +23,7 @@ int shuffle() {
 	 deck_instance.list[random] = newCard;
 	}
   deck_instance.top_card = 0; //cards in deck-1
-
+  return 0;
 }
 
 struct hand* initHand() {

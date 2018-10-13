@@ -1,4 +1,3 @@
-
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -241,6 +240,15 @@ void print_book_match(char inputRank, struct hand* targetHand, int id){
 
 ///////////////////////////////////////
 struct hand* copy_hand_list(struct player* target){
+if(target->card_list == NULL) return NULL;
+struct hand* new = malloc(sizeof(struct hand));
+
+struct hand* next = new;
+target->card_list = target->card_list->next;
+while(target->card_list != NULL){
+
+}
+/*
   struct hand *start, *prev;
   while(target->card_list != NULL){
     struct hand* temp = (struct hand*)malloc(sizeof(struct hand));
@@ -257,4 +265,4 @@ struct hand* copy_hand_list(struct player* target){
   }
   return start; 
 }
-
+*/
