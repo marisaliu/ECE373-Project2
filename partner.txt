@@ -1,0 +1,24 @@
+Creators: Dylan Banh, Marisa Liu
+
+Dylan Banh implemented
+- shuffle()
+- deal_player_cards()
+- next_card()
+- deck_size()
+- init_hand()
+- print_book_match()
+- copy_hand_list
+
+
+Marisa Liu implemented
+ - add_card()
+ - remove_card()
+ - check_add_book()
+ - search()
+ - transfer_cards()
+ - game_over()
+ - reset_player()
+ - computer_play()
+ - user_play()
+ - display_hand()
+ - display_book()
