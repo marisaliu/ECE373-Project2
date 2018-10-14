@@ -23,8 +23,8 @@ int main(void){
   while(play==1){                              //start game
     playAgain = 0;
     shuffle();                                  //shuffle cards
-    if(deal_player_cards(&user) != 0) return;   //deal cards
-    if(deal_player_cards(&computer) != 0) return;
+    deal_player_cards(&user);                //deal cards
+    deal_player_cards(&computer);
     user.hand_size = 7;
     computer.hand_size = 7;
 ///////////////////////Loops Through Players////////////////////////////////   
@@ -37,7 +37,7 @@ int main(void){
         display_book(&computer,2);                    //Display user 1's book
         if(user.hand_size == 0){                      //If player's hand is empty, player will draw a card and end their turn
 	  nextCard = next_card();
-	  if(add_card(&user,nextCard) != 0) return;
+	  add_card(&user,nextCard);
 	  printf("\n  - Go Fish, Player 1 draws %c%c,", nextCard->rank, nextCard->suit);
 	  turn = 0;
 	} 
@@ -48,7 +48,7 @@ int main(void){
      /////////////If they have the rank transfer the cards///////////////////////////////////  
 	  if(transferCards == 1){          
             printf("  - Player 2 has");
-  	    if(transfer_cards(&computer, &user, inputRank) < 0) return;
+  	    transfer_cards(&computer, &user, inputRank);
             bookAdded = check_add_book(&user, inputRank);
             if(bookAdded != 0){
 	      print_book_match(bookAdded,temp,1);
@@ -61,7 +61,7 @@ int main(void){
           else{                          
             printf("  - Player 2 has no %c's", inputRank);
             nextCard = next_card();                                    //Draw a card from deck
-            if(add_card(&user, nextCard) != 0) return;
+            add_card(&user, nextCard);
             printf("\n  - Go Fish, Player 1 draws %c%c", nextCard->rank, nextCard->suit);
             bookAdded = check_add_book(&user, nextCard->rank);         //Checks if a book is made 
             if(bookAdded != 0){
@@ -87,7 +87,7 @@ int main(void){
         display_book(&computer,2);                         //Display user 2's book
         if(computer.hand_size == 0){
 	  nextCard = next_card();
-	  if(add_card(&computer,nextCard) != 0) return;
+	  add_card(&computer,nextCard);
 	  printf("\n  - Go Fish, Player 2 draws a card");
 	  turn = 1;
 	}
@@ -152,6 +152,7 @@ int main(void){
     char input;
     while(playAgain == 0){
       scanf(" %c", &input);
+      while((getchar()) != '\n');
       if(tolower(input) == 'y'){
         reset_player(&user);
 	reset_player(&computer);

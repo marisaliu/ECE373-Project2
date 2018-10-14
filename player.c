@@ -159,7 +159,7 @@ int game_over(struct player* target)
 /////////////////////////////////////////////////////////////////////////////
 int reset_player(struct player* target)
 {
-  target->book[0] = '\0';
+  memset(&(target->book[0]), 0, sizeof(target->book));
   struct hand* temp = NULL;
   while(target->card_list != NULL)
   {
@@ -201,18 +201,13 @@ char computer_play(struct player* target)
 char user_play(struct player* target)
 
 { 
-  char input, end;
-  int rightinput = 0;
+  char input;
   int boolInHand = 0;
   while(boolInHand == 0)
   {
     printf("\nPlayer 1's turn, enter a Rank: ");
-    scanf("%c%c", &input, &end);
-    while(end!= '\n' && rightinput != 2){
-      printf("Error - must have at least one card from rank to play");
-      printf("\nPlayer 1's turn, enter a rank: ");
-      rightinput = scanf("%c%c", &end, &input);
-    }
+    scanf("%c", &input);
+    while((getchar()) != '\n');
     struct hand* temp = target->card_list;
     while(temp != NULL)
     {
