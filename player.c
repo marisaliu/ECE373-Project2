@@ -189,14 +189,19 @@ char computer_play(struct player* target)
 /////////Returns a valid selected rank////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 char user_play(struct player* target)
-{
- ;  
-char input;
+{ 
+  char input, end;
+  int rightinput = 0;
   int boolInHand = 0;
   while(boolInHand == 0)
   {
     printf("\nPlayer 1's turn, enter a Rank: ");
-    scanf(" %c",&input);   
+    scanf("%c%c", &input, &end);
+    while(end!= '\n' && rightinput != 2){
+      printf("Error - must have at least one card from rank to play");
+      printf("\nPlayer 1's turn, enter a rank: ");
+      rightinput = scanf("%c%c", &end, &input);
+    }
     struct hand* temp = target->card_list;
     while(temp != NULL)
     {
@@ -207,11 +212,14 @@ char input;
       }
       temp = temp->next;
     }
-    printf("Error = must have at least one card from rank to play");
+    printf("Error - must have at least one card from rank to play");
   }
 }
 
-/////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+//////////////////Displays cards in hand////////////////////////////
+///////////////////Returns nothing//////////////////////////////////
+////////////////////////////////////////////////////////////////////
 void display_hand(struct player* target){
   printf("\n\nPlayer 1's Hand -");
   struct hand* temp = target->card_list;
@@ -226,7 +234,11 @@ void display_book(struct player* target, int id){
   printf("%s", target->book);
 }
 
-///////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////
+//////////Prints the cards from the targets hand that become a book///
+//////////////////Returns nothing/////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 void print_book_match(char inputRank, struct hand* targetHand, int id){
   struct hand* temp = targetHand;
   printf("\n  - Player %d has", id);
@@ -239,7 +251,11 @@ void print_book_match(char inputRank, struct hand* targetHand, int id){
   printf("\n  - Player %d books %c", id, inputRank);
 }
 
-///////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////
+///////Copies the contents of a linked list into another linked list///
+//////////////////Returns struct hand//////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 struct hand* copy_hand_list(struct player* target){
   struct hand *temp = target->card_list;
   struct hand *new=NULL, **tail = &new;
@@ -248,25 +264,7 @@ struct hand* copy_hand_list(struct player* target){
       (*tail)->top = temp->top;
       (*tail)->next = NULL;
       tail = &(*tail)->next;
-}
-return new;
-}
-
-
-/*  struct hand *start=NULL, *prev=NULL;
-  while(target->card_list != NULL){
-    struct hand* temp = (struct hand*)malloc(sizeof(struct hand));
-    temp->top = target->card_list->top;
-    if(start == NULL){
-      start = temp;
-      prev = temp;
-    }
-    else{
-      prev->next = temp;
-      prev = temp; 
-    }
-   target->card_list = target->card_list->next;
   }
-  return start; 
+  return new;
 }
-*/
+  

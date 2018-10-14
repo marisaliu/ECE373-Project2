@@ -145,7 +145,7 @@ int main(void){
       printf("\nPlayer 2 Wins! %d-%d", strlen(computer.book), strlen(user.book));
     }
     else{printf("\nERROR! - No one won!");}
-    printf("\nDo you want to play again?");
+    printf("\nDo you want to play again?[Y/N]");
 
 /////////////////////Play Again///////////////////////////////////////////////
 
