@@ -13,7 +13,11 @@ int shuffle() {
   for(i=0; i<TOTALDECK; i++) {
  	newCard.suit = suit[i%4];
 	newCard.rank = rank[i%13];
-	deck_instance.list[i] = newCard;
+    if(newCard.suit == '\0' || newCard.rank == '\0'){
+      printf("\nERROR IN shuffle");
+      return -1;
+    }
+    deck_instance.list[i] = newCard;
   }
   for(i=TOTALDECK-1; i>=0; i--) {
 	 random = (rand() % (i+1));
@@ -22,7 +26,7 @@ int shuffle() {
 	 deck_instance.list[random] = newCard;
 	}
   deck_instance.top_card = 0; //cards in deck-1
-
+  return 0;
 }
 
 struct hand* initHand() {
@@ -35,7 +39,10 @@ int deal_player_cards(struct player* target) {
   struct hand *temp;
   for(int i=0; i<7; i++) {
     temp = initHand();
-    if(temp == NULL) {return -1;}
+    if(temp == NULL) {
+      printf("\nERROR IN deal_player_cards");
+      return -1;
+    }
     else{ 
       temp->top = deck_instance.list[deck_instance.top_card++];
       temp->next = target->card_list;

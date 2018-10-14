@@ -1,4 +1,3 @@
-
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -13,7 +12,10 @@ int add_card(struct player* target, struct card* new_card)
 {
   struct hand* temp;
   temp = (struct hand*)malloc(sizeof(struct hand));
-  if(temp ==NULL){ return -1;}
+  if(temp ==NULL){
+    printf("\nERROR IN add_card");
+    return -1;
+  }
   temp->top = *new_card;
   temp->next = target->card_list;
   target->card_list = temp;
@@ -31,7 +33,10 @@ int remove_card(struct player* target, struct card* old_card)
 {
   struct hand* iterator = target->card_list;
   struct hand* previous = NULL;
-  if(iterator == NULL){ return -1;} //Error list is empty
+  if(iterator == NULL){
+    printf("\nERROR IN remove_card");
+    return -1;
+  } //Error list is empty
   while ((iterator->top.rank != old_card->rank) || (iterator->top.suit != old_card->suit))
   {
     previous = iterator;
@@ -119,9 +124,15 @@ int transfer_cards(struct player* src, struct player* dest, char rank)
     if(temp->top.rank == rank){
       printf(" %c%c", temp->top.rank, temp->top.suit);
       error = add_card(dest,&(temp->top));
-      if(error == -1) return -1;
+      if(error == -1){
+        printf("\nERROR IN transfer_cards");
+        return -1;
+      }
       error = remove_card(src, &(temp->top));
-      if(error == -1) return -1;
+      if(error == -1){
+        printf("\nERROR IN transfer_cards");
+        return -1;
+      }
       temp = src->card_list;
     }
     else{ temp = temp->next;}
@@ -156,6 +167,10 @@ int reset_player(struct player* target)
     target->card_list = temp->next;
     free(temp);
   }
+  if(target->card_list != NULL || target->book[0] != '\0'){
+    printf("\nERROR IN reset_player");
+    return -1;
+  }
   return 0;
 }
 
@@ -166,21 +181,16 @@ int reset_player(struct player* target)
 ////////////////////////////////////////////////////////////////////////////
 char computer_play(struct player* target)
 {
-  char stringRank[50] = "";
   struct hand* temp = target->card_list;
   int count = 0;
   srand(time(0));
-  while(temp != NULL)       //Loops through the linked list and adds the rank to a char array
-  {
-    stringRank[count++] = temp->top.rank;
+  int index = (rand() % target->hand_size);
+  while((count < index) && (temp != NULL)){
     temp = temp->next;
+    count++;
   }
-  //Picks a random index to access in the char array and returns that char
-  int max = strlen(stringRank);
-  int index = rand() % max;
-  return stringRank[index];
+  return temp->top.rank;
 }
-
 
 
 
@@ -189,6 +199,7 @@ char computer_play(struct player* target)
 /////////Returns a valid selected rank////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 char user_play(struct player* target)
+
 { 
   char input, end;
   int rightinput = 0;
@@ -258,7 +269,7 @@ void print_book_match(char inputRank, struct hand* targetHand, int id){
 ///////////////////////////////////////////////////////////////////////
 struct hand* copy_hand_list(struct player* target){
   struct hand *temp = target->card_list;
-  struct hand *new=NULL, **tail = &new;
+  struct hand *new = NULL, **tail = &new;
   for(;temp; temp = temp->next){
       *tail = malloc(sizeof **tail);
       (*tail)->top = temp->top;
@@ -267,4 +278,4 @@ struct hand* copy_hand_list(struct player* target){
   }
   return new;
 }
-  
+
